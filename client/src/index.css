@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default scene (dusk). GSAP rewrites these while scrolling. */
+  --bg: 18 16 43;
+  --ink: 243 239 255;
+  --accent: 139 123 255;
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@layer base {
+  html { color-scheme: dark; }
+  body {
+    @apply bg-surface font-body text-ink antialiased;
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+  h1, h2, h3, h4 { @apply font-display; letter-spacing: -0.025em; line-height: 1.04; }
+  ::selection { background: rgb(var(--accent) / 0.45); color: rgb(var(--ink)); }
+  :focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 3px; border-radius: 6px; }
+}
+
+@layer components {
+  /* Glassmorphism: translucent fill, blur, hairline edge and a top highlight. */
+  .glass {
+    background: linear-gradient(135deg, rgb(var(--ink) / 0.10), rgb(var(--ink) / 0.03));
+    border: 1px solid rgb(var(--ink) / 0.16);
+    box-shadow: inset 0 1px 0 rgb(var(--ink) / 0.22), 0 20px 50px -20px rgb(0 0 0 / 0.55);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+  }
+  .glass-strong {
+    background: rgb(var(--bg) / 0.55);
+    border: 1px solid rgb(var(--ink) / 0.14);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    backdrop-filter: blur(24px) saturate(160%);
+  }
+  .container-x { @apply mx-auto w-full max-w-6xl px-5 sm:px-8; }
+  .prose-post { max-width: 66ch; }
+  .prose-post h2 { @apply mt-12 mb-4 text-3xl font-semibold; }
+  .prose-post h3 { @apply mt-8 mb-3 text-2xl font-semibold; }
+  .prose-post p { @apply my-5; }
+  .prose-post ul { @apply my-5 list-disc space-y-2 pl-6; }
+  .prose-post ol { @apply my-5 list-decimal space-y-2 pl-6; }
+  .prose-post li::marker { color: rgb(var(--accent)); }
+  .prose-post a { @apply underline decoration-accent underline-offset-4; }
+  .prose-post blockquote { @apply my-8 border-l-2 border-accent pl-6 text-2xl italic; line-height: 1.4; }
+  .prose-post code { @apply rounded bg-ink/10 px-1.5 py-0.5 text-[0.85em]; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .prose-post pre { @apply glass my-6 overflow-x-auto rounded-xl p-5 text-sm; }
+  .prose-post pre code { @apply bg-transparent p-0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
